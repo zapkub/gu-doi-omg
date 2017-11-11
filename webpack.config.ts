@@ -5,7 +5,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    'babel-polyfill',
+    // 'babel-polyfill',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     'react-hot-loader/patch',
     './dist/components/index.js'
@@ -26,7 +26,10 @@ module.exports = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactLoadablePlugin({
+      filename: './public/react-loadable.json',
+    }),
   ],
   output: {
     filename: '[name].bundle.js',

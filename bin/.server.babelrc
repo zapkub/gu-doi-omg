@@ -4,6 +4,7 @@
     "react"
   ],
   "plugins": [
-    "dynamic-import-webpack"
+    "dynamic-import-node",
+    "react-loadable/babel"
   ]
 }
