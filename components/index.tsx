@@ -2,18 +2,24 @@ import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import { AppContainer } from 'react-hot-loader'
 import MainApp from './App'
-import Loadable from 'react-loadable';
+import { BrowserRouter as Router } from 'react-router-dom'
 
 (window as any).main = function () {
   async function mountApp(App) {
-    await Loadable.preloadReady()
+    console.log('Mount !!')
     const rootDOM = document.getElementById('root')
-    ReactDOM.hydrate(<AppContainer><App /></AppContainer>, rootDOM)
+    ReactDOM.hydrate(
+      <Router>
+          <App />
+      </Router>
+      , rootDOM)
   }
-  
   mountApp(MainApp)
   if (module.hot) {
-    module.hot.accept('./App', () => { mountApp(MainApp) })
+    module.hot.accept('./App', async () => {
+      console.log('Rerender app')
+      mountApp(MainApp)
+    })
   }
 }
 

@@ -5,7 +5,7 @@
   "plugins": [
     "react-hot-loader/babel",
     "react-loadable/babel",
-    "dynamic-import-node",
+    "dynamic-import-webpack",
     "./babel.js" 
   ]
 }

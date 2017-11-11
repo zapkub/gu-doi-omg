@@ -1,15 +1,11 @@
 
 import * as React from 'react'
-import Loadable from 'react-loadable'
 
-const Landing = Loadable<any, any>({
-  loader: () => import('./landing'),
-  loading: () => <div>{'load'}</div>,
-});
+import Routes from './routes'
 
 export default () => (
   <div>
-    {'My No. 2914+++ boiler plated ja'}
-    <Landing />
+    <button>{'hi'}</button>
+    <Routes />
   </div>
 )

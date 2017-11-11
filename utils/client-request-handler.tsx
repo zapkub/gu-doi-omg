@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { renderToString } from 'react-dom/server'
 import { getBundles } from 'react-loadable/webpack'
+import { StaticRouter as Router } from 'react-router-dom'
 
 const Loadable = require('react-loadable')
 
@@ -14,6 +15,22 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const compiler = webpack(require('../webpack.config'))
 
 const __html = fs.readFileSync(path.join(__dirname, '../index.html')).toString()
+
+/** support ensure */
+let proto = Object.getPrototypeOf(require);
+!proto.hasOwnProperty("ensure") && Object.defineProperties(proto, {
+  "ensure": {
+    value: function ensure(modules, callback) {
+      callback(this);
+    },
+    writable: false
+  },
+  "include": {
+    value: function include() { },
+    writable: false
+  }
+});
+
 
 function clearRequireCache() {
   const keys = Object.keys(require.cache)
@@ -43,22 +60,32 @@ export default (app: Express.Application) => {
     const App = require('../components/App').default
 
     const modules = []
-    await Loadable.preloadAll()
-    const RenderedApp = renderToString(<Loadable.Capture report={moduleName => modules.push(moduleName)}><App /></Loadable.Capture>)
-    
-    let bundles = getBundles(stats, modules)
-    const PreloadModule = bundles.map(bundle => {
-      if (/.+\.map/.test(bundle.file)) {
-        return ''
-      }
-      return `<script src="/public/${bundle.file}"></script>`
-    }).join('\n')
+    try {
+      // await Loadable.preloadAll()
+      const RenderedApp = renderToString(
+        <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+          <Router context={{}} location={req.url}>
+            <App />
+          </Router>
+        </Loadable.Capture>)
 
-    console.log(PreloadModule)
-    let html = __html.replace('{{app-root}}', RenderedApp)
-    html = html.replace('{{server-script}}', PreloadModule)
+      let bundles = getBundles(stats, modules)
+      const PreloadModule = bundles.map(bundle => {
+        if (/.+\.map/.test(bundle.file)) {
+          return ''
+        }
+        return `<script src="/public/${bundle.file}"></script>`
+      }).join('\n')
 
-    res.send(html)
+      console.log(PreloadModule)
+      let html = __html.replace('{{app-root}}', RenderedApp)
+      html = html.replace('{{server-script}}', PreloadModule)
+
+      res.send(html)
+    } catch (e) {
+      console.error(e)
+      res.send(e)
+    }
   })
 
 }
