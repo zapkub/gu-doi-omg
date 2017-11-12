@@ -1,6 +1,10 @@
 import * as React from 'react'
 
-
-export default () => (
-  <div>{'landing edit on split why router failed....... ssr hoooooly shit'}</div>
-)
+export default class Authentication extends React.Component {
+  render() {
+    return <div>{'landing?'}</div>
+  }
+}
+// export default () => (
+//   <div>{'Landing fjdfisjdfirom split modulee'}</div>
+// )

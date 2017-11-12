@@ -1,5 +1,6 @@
 
 import * as React from 'react'
+import * as PropTypes from 'prop-types';
 import Loadable from 'react-loadable'
 import { Link, Route } from './Router'
 
@@ -25,11 +26,17 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Link to='/login'>{'login'}</Link>
-        <Link to='/'>{'home'}</Link>
         {'My No. 2914+++ boiler plated ja'}
-          <Route path='/' render={() => <Landing />} />
-          <Route path='/login' render={() => <Authentication />} />
+        {'yeah..kdsjidjfijfk.'}
+        {this.state.hide ? 'hide': 'show'}
+        <button onClick={() => this.setState({ hide: !this.state.hide})}>{'hide'}</button>
+        {this.state.hide ? <Landing /> : ''}
+        {!this.state.hide ? <Authentication /> : ''}
+
+        <Authentication />
+        <Landing />
+          {/* <Route path='/' render={() => <Landing />} />
+          <Route path='/login' render={() => <Authentication />} /> */}
       </div>
     )
   }

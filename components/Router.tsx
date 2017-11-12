@@ -2,10 +2,10 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types';
 import { Component } from 'react';
 
-class Link extends React.Component<{to: string},{}> {
+class Link extends React.Component<{ to: string }, {}> {
   pushRoute() {
     console.log('navigation browser to', this.props.to)
-    window.history.pushState({}, '', this.props.to)
+    window.history.pushState({ path: this.props.to }, '', this.props.to)
   }
   render() {
     return <button onClick={this.pushRoute.bind(this)}>{'Link'}</button>
@@ -15,7 +15,7 @@ class Link extends React.Component<{to: string},{}> {
 class Route extends React.Component<{ path: string, render: any }, {}>{
   render() {
     const isMatch = this.context.match(this.props.path)
-    if(isMatch) {console.log('render...', this.props.path)}
+    if (isMatch) { console.log('render...', this.props.path) }
     return isMatch ? this.props.render() : <div />
   }
 }
@@ -26,12 +26,18 @@ class Route extends React.Component<{ path: string, render: any }, {}>{
 export { Route, Link }
 export default class PlainlessRouter extends React.Component<{ location?: any }, {}> {
   componentDidMount() {
-    window.addEventListener('changestate', function(e) {
-      console.log('URL changed');
-    });
+    console.log('listen to history')
+    const pushState = window.history.pushState
+    const setState = this.setState.bind(this)
+    window.history.pushState = function (state, title, url) {
+      console.log('push', url)
+      setState({currentPath: url})
+      return pushState.apply(window.history, arguments);
+    }
   }
   getChildContext() {
     return {
+      url: this.props.location || window.location.pathname,
       match: (path: string) => {
         if (typeof window !== 'undefined') {
           console.log(window.location)
@@ -44,9 +50,15 @@ export default class PlainlessRouter extends React.Component<{ location?: any },
       }
     }
   }
+  constructor(props){
+    super()
+    this.state = {
+      currentPath: 'init'
+    }
+  }
   render() {
     return (
-      <div>{this.props.children}</div>
+      <div>{this.state.currentPath}{this.props.children}</div>
     )
   }
 }
