@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable'
-import  { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import * as React from 'react'
 
 const Landing = Loadable({
@@ -12,7 +12,9 @@ const Authentication = Loadable({
   loading: () => <div>{'loading'}</div>
 })
 
-export default () => [
-  <Route component={Landing} path='/' exact key='home' />,
-  <Route component={Authentication} path='/login' key='authentication' />
-]
+export default () => (
+  <div>
+    <Route component={Landing} path='/' exact key='home' />
+    <Route component={Authentication} path='/login' key='authentication' />
+  </div>
+)

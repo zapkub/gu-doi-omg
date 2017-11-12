@@ -1,0 +1,18 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "public"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "babel-node index.js"
+  },
+  "env": {
+    "NODE_ENV": "server"
+  },
+  "watch": [
+    "./index.js"
+  ]
+}

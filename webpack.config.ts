@@ -8,7 +8,7 @@ module.exports = {
     // 'babel-polyfill',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     'react-hot-loader/patch',
-    './dist/components/index.js'
+    './components/index.js'
   ],
   devtool: 'source-map',
   module: {
@@ -17,6 +17,18 @@ module.exports = {
         test: /\.js$/,
         use: ["source-map-loader"],
         enforce: "pre"
+      },
+      {
+        test: /\.js$/,
+        exclude: [
+          path.resolve(__dirname, "node_modules")
+       ],
+        use: {
+          loader: 'babel-loader?cacheDirectory',
+          options: {
+            forceEnv: 'client'
+          }
+        }
       }
     ]
   },

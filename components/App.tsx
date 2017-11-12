@@ -9,7 +9,8 @@ export default class App extends React.Component<{}, {}>{
 
   render() {
     return <div>
-      {'My No. 2914++++ boiler plated jaa'}
+      {'React, Typescript, SSR, Code-split'}
+      <br />
       <Link to='/'>{'home'}</Link>
       <Link to='/login'>{'login'}</Link>
       <Routes />

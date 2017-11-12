@@ -24,7 +24,7 @@ function clearRequireCache() {
     })
 }
 
-export default (app: Express.Application) => {
+export default (app) => {
 
   /** 
    * Dev server

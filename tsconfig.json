@@ -9,7 +9,6 @@
     "inlineSources": true,
     "jsx": "react",
     "allowJs": true,
-    "sourceMap": true,
     "lib": [
       "es5",
       "es6",

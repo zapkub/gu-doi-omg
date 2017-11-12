@@ -5,9 +5,15 @@ import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import Loadable from 'react-loadable';
 
+declare global {
+  interface NodeModule {
+    hot: any
+  }
+}
+
 async function mountApp(Component) {
   const rootDOM = document.getElementById('root')
-  await Loadable.preloadReady()
+  await (Loadable as any).preloadReady()
   ReactDOM.hydrate(
     <AppContainer>
       <BrowserRouter>
@@ -20,7 +26,7 @@ mountApp(App)
 
 if (module.hot) {
   module.hot.accept('./App', async () => { 
-    await Loadable.preloadReady()
+    await (Loadable as any).preloadReady()
     mountApp(App) 
   })
 }
