@@ -1,11 +1,6 @@
 
 import * as React from 'react'
-import Loadable from 'react-loadable'
-
-const Landing = Loadable<any, any>({
-  loader: () => import('./landing'),
-  loading: () => <div>{'load'}</div>,
-});
+import Landing from './landing'
 
 export default () => (
   <div>

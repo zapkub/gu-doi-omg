@@ -3,9 +3,6 @@ import * as React from 'react'
 import * as fs from 'fs'
 import * as path from 'path'
 import { renderToString } from 'react-dom/server'
-import { getBundles } from 'react-loadable/webpack'
-
-const Loadable = require('react-loadable')
 
 const webpack = require('webpack')
 const webpackDevServerMiddleware = require('webpack-dev-middleware')
@@ -39,24 +36,14 @@ export default (app: Express.Application) => {
 
   app.get('*', async (req: Request, res: Response) => {
     clearRequireCache()
-    const stats = require('../public/react-loadable.json')
     const App = require('../components/App').default
 
-    const modules = []
-    await Loadable.preloadAll()
-    const RenderedApp = renderToString(<Loadable.Capture report={moduleName => modules.push(moduleName)}><App /></Loadable.Capture>)
-    
-    let bundles = getBundles(stats, modules)
-    const PreloadModule = bundles.map(bundle => {
-      if (/.+\.map/.test(bundle.file)) {
-        return ''
-      }
-      return `<script src="/public/${bundle.file}"></script>`
-    }).join('\n')
+    const RenderedApp = renderToString(
+      <App />
+    )
 
-    console.log(PreloadModule)
     let html = __html.replace('{{app-root}}', RenderedApp)
-    html = html.replace('{{server-script}}', PreloadModule)
+    html = html.replace('{{server-script}}', '')
 
     res.send(html)
   })
