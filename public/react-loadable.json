@@ -8,7 +8,17 @@
     {
       "id": "./dist/components/landing/index.js",
       "name": "./dist/components/landing/index.js",
+      "file": "0.a05296489fe3fbdcbf4a.hot-update.js"
+    },
+    {
+      "id": "./dist/components/landing/index.js",
+      "name": "./dist/components/landing/index.js",
       "file": "0.chunk.js.map"
+    },
+    {
+      "id": "./dist/components/landing/index.js",
+      "name": "./dist/components/landing/index.js",
+      "file": "0.a05296489fe3fbdcbf4a.hot-update.js.map"
     }
   ],
   "./authentication": [
@@ -20,17 +30,7 @@
     {
       "id": "./dist/components/authentication/index.js",
       "name": "./dist/components/authentication/index.js",
-      "file": "1.d40c7e9df459dd595770.hot-update.js"
-    },
-    {
-      "id": "./dist/components/authentication/index.js",
-      "name": "./dist/components/authentication/index.js",
       "file": "1.chunk.js.map"
-    },
-    {
-      "id": "./dist/components/authentication/index.js",
-      "name": "./dist/components/authentication/index.js",
-      "file": "1.d40c7e9df459dd595770.hot-update.js.map"
     }
   ],
   "./_toSource": [

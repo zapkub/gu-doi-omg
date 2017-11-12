@@ -73,7 +73,6 @@ function watch (rootFileNames, options) {
       const root = path.join(__dirname, '..')
       let distPath = fileName.replace(root, '')
       distPath = path.join(root, 'dist', distPath)
-      console.log('write to ', distPath)
       fsPath.writeFileSync(distPath.replace(/\.tsx|\.ts/, '.js'), babelClientResult.code, 'utf8')
 
       const babelServerResult = transformFileSync(fileName, {
