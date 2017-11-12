@@ -6,4 +6,4 @@ dist
 *.map
 package.lock.json
 .yarnclean
-!bin/development.js
+!bin/*.js
