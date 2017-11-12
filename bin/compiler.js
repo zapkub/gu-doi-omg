@@ -1,7 +1,7 @@
 const ts = require('typescript')
 const fs = require('fs')
 var fsPath = require('fs-path')
-const { transform } = require('babel-core')
+const { transformFileSync } = require('babel-core')
 
 function watch (rootFileNames, options) {
   const files = {}
@@ -64,24 +64,32 @@ function watch (rootFileNames, options) {
       logErrors(fileName)
     }
 
-    output.outputFiles.forEach(o => {
-      if (!/.+\.map/.test(o.name)) {
-        const babelServerResult = transform(o.text, {
-          sourceRoot: path.join(__dirname, '..'),
-          sourceMaps: 'inline',
-          extends: path.join(__dirname, './.server.babelrc')
-        })
-        fs.writeFileSync(o.name, babelServerResult.code, 'utf8')
+    function babelTranspile (fileName) {
+      const babelClientResult = transformFileSync(fileName, {
+        sourceRoot: path.join(__dirname, '..'),
+        sourceMaps: 'inline',
+        extends: path.join(__dirname, './.client.babelrc')
+      })
+      const root = path.join(__dirname, '..')
+      let distPath = fileName.replace(root, '')
+      distPath = path.join(root, 'dist', distPath)
+      console.log('write to ', distPath)
+      fsPath.writeFileSync(distPath.replace(/\.tsx|\.ts/, '.js'), babelClientResult.code, 'utf8')
 
-        const babelClientResult = transform(o.text, {
-          sourceRoot: path.join(__dirname, '..'),
-          sourceMaps: 'inline',
-          extends: path.join(__dirname, './.client.babelrc')
-        })
-        const distPath = path.join(__dirname, '../dist', fileName)
-        fsPath.writeFileSync(distPath.replace(/\.tsx|\.ts/, '.js'), babelClientResult.code, 'utf8')
+      const babelServerResult = transformFileSync(fileName, {
+        sourceRoot: path.join(__dirname, '..'),
+        sourceMaps: 'inline',
+        extends: path.join(__dirname, './.server.babelrc')
+      })
+      fs.writeFileSync(fileName, babelServerResult.code, 'utf8')
+    }
+
+    output.outputFiles.forEach(o => {
+      fs.writeFileSync(o.name, o.text, 'utf8')
+      if (!/.+\.map/.test(o.name)) {
+        babelTranspile(o.name)
       } else {
-        fs.writeFileSync(o.name, o.text, 'utf8')
+
       }
     })
   }

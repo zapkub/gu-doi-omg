@@ -22,14 +22,12 @@ module.exports = {
   },
   devServer: {
     contentBase: './public',
-     hot: true
+    hot: true
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new ReactLoadablePlugin({
-      filename: './public/react-loadable.json',
-    }),
+    new webpack.HotModuleReplacementPlugin()
+
   ],
   output: {
     filename: '[name].bundle.js',

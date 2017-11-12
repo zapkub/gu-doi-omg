@@ -1,7 +1,7 @@
 import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import { AppContainer } from 'react-hot-loader'
-import MainApp from './App'
+import App from './App'
 
 async function mountApp(Component) {
   const rootDOM = document.getElementById('root')

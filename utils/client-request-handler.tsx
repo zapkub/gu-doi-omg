@@ -28,8 +28,7 @@ export default (app: Express.Application) => {
   */
   app.use(webpackDevServerMiddleware(compiler, {
     publicPath: '/public/',
-    hot: true,
-    stats: 'minimal'
+    hot: true
   }))
   app.use(webpackHotMiddleware(compiler))
 

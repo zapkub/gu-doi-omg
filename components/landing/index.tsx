@@ -2,5 +2,5 @@ import * as React from 'react'
 
 
 export default () => (
-  <div>{'landing edit on split ssr hoooooly shit'}</div>
+  <div>{console.log('landing')}{'landing ssr holy shit'}</div>
 )
