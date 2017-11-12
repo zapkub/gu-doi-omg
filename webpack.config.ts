@@ -26,7 +26,10 @@ module.exports = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactLoadablePlugin({
+      filename: './public/react-loadable.json',
+    }),
 
   ],
   output: {
