@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { renderToString } from 'react-dom/server'
 import { getBundles } from 'react-loadable/webpack'
+import Router from '../components/Router'
 
 const Loadable = require('react-loadable')
 
@@ -44,8 +45,13 @@ export default (app: Express.Application) => {
 
     const modules = []
     await Loadable.preloadAll()
-    const RenderedApp = renderToString(<Loadable.Capture report={moduleName => modules.push(moduleName)}><App /></Loadable.Capture>)
-    
+    const RenderedApp = renderToString(
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <Router location={req.url}>
+          <App />
+        </Router>
+      </Loadable.Capture>)
+
     let bundles = getBundles(stats, modules)
     const PreloadModule = bundles.map(bundle => {
       if (/.+\.map/.test(bundle.file)) {
@@ -54,7 +60,6 @@ export default (app: Express.Application) => {
       return `<script src="/public/${bundle.file}"></script>`
     }).join('\n')
 
-    console.log(PreloadModule)
     let html = __html.replace('{{app-root}}', RenderedApp)
     html = html.replace('{{server-script}}', PreloadModule)
 
