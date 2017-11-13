@@ -13,6 +13,7 @@
     "NODE_ENV": "server"
   },
   "watch": [
-    "./index.js"
+    "./index.js",
+    "graphql"
   ]
 }
