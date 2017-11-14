@@ -9,7 +9,7 @@ export default class App extends React.Component<{}, {}>{
 
   render() {
     return <div>
-      {'React, Typescript, SSR, Code-split'}
+      {'React, Typescript,SSR and Code-split'}
       <br />
       <Link to='/'>{'home'}</Link>
       <Link to='/login'>{'login'}</Link>

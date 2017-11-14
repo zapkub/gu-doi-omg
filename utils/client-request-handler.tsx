@@ -15,15 +15,6 @@ const compiler = webpack(require('../webpack.config'))
 
 const __html = fs.readFileSync(path.join(__dirname, '../index.html')).toString()
 
-function clearRequireCache() {
-  const keys = Object.keys(require.cache)
-    .filter(key => /.+\/components/.test(key))
-    .forEach(key => {
-      console.log(`dispose: ${key}`)
-      delete require.cache[key]
-    })
-}
-
 export default (app) => {
 
   /** 
@@ -31,13 +22,13 @@ export default (app) => {
   */
   app.use(webpackDevServerMiddleware(compiler, {
     publicPath: '/public/',
-    hot: true
+    hot: true,
+    stats: 'minimal'
   }))
   app.use(webpackHotMiddleware(compiler))
 
 
   app.get('*', async (req: Request, res: Response) => {
-    clearRequireCache()
     const App = require('../components/App').default
     const stats = require('../public/react-loadable.json')
     try{
