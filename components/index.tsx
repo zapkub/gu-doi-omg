@@ -12,8 +12,8 @@ declare global {
 }
 
 async function mountApp(Component) {
-  const rootDOM = document.getElementById('root')
   await (Loadable as any).preloadReady()
+  const rootDOM = document.getElementById('root')
   ReactDOM.hydrate(
     <AppContainer>
       <BrowserRouter>
@@ -21,13 +21,14 @@ async function mountApp(Component) {
       </BrowserRouter>
     </AppContainer>, rootDOM)
 }
-
-mountApp(App)
+( window as any ).startApp = () => {
+  mountApp(App)
+}
 
 if (module.hot) {
-  module.hot.accept('./App', async () => { 
+  module.hot.accept('./App', async () => {
     await (Loadable as any).preloadReady()
-    mountApp(App) 
+    mountApp(App)
   })
 }
 

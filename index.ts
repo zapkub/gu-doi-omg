@@ -8,8 +8,6 @@ addClientRouter(app)
 
 if(config.isDev) {
   logger.log('App: start in development mode')
-  const disposer = require('./utils/module-disposer').default
-  disposer()
 }
 
 app.listen(3000, function() {

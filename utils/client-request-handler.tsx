@@ -33,7 +33,7 @@ export default (app) => {
     const stats = require('../public/react-loadable.json')
     try{
     const modules = []
-    // await Loadable.preloadAll()
+    await Loadable.preloadAll()
     const RenderedApp = renderToString(
       <StaticRouter location={req.url} context={{}}>
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
