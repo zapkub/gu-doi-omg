@@ -1,15 +1,14 @@
 import * as React from 'react'
 
 class Comp extends React.Component {
-  render(){
-    return (<div>
-        
-      </div>)
+  render() {
+    return <div />
   }
 }
 
 export default () => (
   <div>
-    {'Landing'}{console.log('check source map here')}
+    {'Landing'}
+    {console.log('check source map here')}
   </div>
 )
