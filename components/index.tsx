@@ -3,7 +3,7 @@ import * as React from 'react'
 import { AppContainer } from 'react-hot-loader'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-import Loadable from 'react-loadable';
+import Loadable from 'react-loadable'
 
 declare global {
   interface NodeModule {
@@ -19,9 +19,13 @@ async function mountApp(Component) {
       <BrowserRouter>
         <Component />
       </BrowserRouter>
-    </AppContainer>, rootDOM)
+    </AppContainer>,
+    rootDOM
+  )
 }
-( window as any ).startApp = () => {
+
+// tslint:disable-next-line:semicolon
+(window as any).startApp = () => {
   mountApp(App)
 }
 
@@ -31,4 +35,3 @@ if (module.hot) {
     mountApp(App)
   })
 }
-
